@@ -1,0 +1,14 @@
+{
+  "name": "users",
+  "version": "1.0.0",
+  "description": "",
+  "main": "function.js",
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "scripts": {
+    "test": "mocha tests/unit/"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -23,6 +23,77 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+  GetAllUsers:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: users/
+      Handler: function.getAllUsers
+      Runtime: nodejs12.x
+      Events:
+        GetAllUsers:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /users
+            Method: get
+  GetUser:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: users/
+      Handler: function.getUser
+      Runtime: nodejs12.x
+      Events:
+        GetUser:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /users/{id}
+            Method: get
+
+  # CreateNewUserAPI:
+  #   Type: AWS::Serverless::Api
+  #   Properties:
+  #     Name: CreateNewUserAPI
+  #     StageName: default
+  #     Models:
+  #       RequestModel:
+  #         $schema: 'http://json-schema.org/draft-04/mySchema#'
+  #         type: object
+  #         properties:
+  #           Format:
+  #             type: string
+  #           Name:
+  #             type: string
+  #             minLength: 3
+  #           Id:
+  #             type: string
+  #         required:
+  #           - Format
+  #           - Id      
+
+  # BodyRequestValidator:
+  #   Type: AWS::ApiGateway::RequestValidator
+  #   Properties:
+  #     Name: BodyRequestValidator
+  #     RestApiId: !Ref CreateNewUserAPI
+  #     ValidateRequestBody: true
+  #     ValidateRequestParameters: false
+
+  CreateUser:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: users/
+      Handler: function.createUser
+      Runtime: nodejs12.x
+      Events:
+        CreateUser:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            #RestApiId: !Ref CreateNewUserAPI
+            Path: /users/{id}
+            Method: post
+            #RequestValidatorId: !Ref BodyRequestValidator      
+            #RequestModel: 
+            #  Model: RequestModel
+            #  Required: true
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
